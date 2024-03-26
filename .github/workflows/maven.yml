@@ -16,6 +16,7 @@ on:
 
 jobs:
   build:
+    
 
     runs-on: ubuntu-latest
 
@@ -29,6 +30,15 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+    - name: Set Save state
+      id: save-state
+      run: echo "::set-output name=STATE::some_value"
+
+    - name: Set output
+      id: set-output
+      run: echo "::set-output name=OUTPUT::${{ steps.save-state.outputs.STATE }}"
+
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
